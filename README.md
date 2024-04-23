@@ -15,6 +15,6 @@ npm start
 Open [http://localhost:8080](http://localhost:8080) with your browser to see the result.
 
 ## What I using in this project?
-✔ Frontend: Reactjs + Redux. HTML/CSS-scss/Bootstrap4 (reactrap)
-✔ Backend: Node.js (Express) + MySql (Sequelize)
-✔ MVC architecture
+- Frontend: Reactjs + Redux. HTML/CSS-scss/Bootstrap4 (reactrap).
+- Backend: Node.js (Express) + MySql (Sequelize).
+- MVC architecture.
