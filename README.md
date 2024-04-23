@@ -1,6 +1,6 @@
 # Hospital-Booking-Website
-International University VNU - Web Application Development Project
-This is a [Node.js](https://nodejs.org/) project bootstrapped
+International University VNU - Web Application Development Project.
+This is a [Node.js](https://nodejs.org/) project.
 
 ## Getting Started
 
