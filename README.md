@@ -1,5 +1,5 @@
 # Hospital-Booking-Website
-International University VNU - Web Application Development Project.
+International University VNU - Web Application Development Project.  
 This is a [Node.js](https://nodejs.org/) project.
 
 ## Getting Started
