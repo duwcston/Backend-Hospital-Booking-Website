@@ -3,7 +3,7 @@
 module.exports = {
     async up(queryInterface, Sequelize) {
         await queryInterface.createTable('histories', {
-            history_id: {
+            id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
@@ -16,6 +16,9 @@ module.exports = {
                 type: Sequelize.INTEGER
             },
             descrtiption: {
+                type: Sequelize.STRING
+            },
+            files: {
                 type: Sequelize.STRING
             },
 
