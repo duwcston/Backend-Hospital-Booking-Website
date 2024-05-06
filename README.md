@@ -32,7 +32,7 @@ Object-Relational Mapping (ORM) is a technique that lets you query and manipulat
 For example: to Insert a new user 
 without ORM:
 ```bash
-INSERT INTO table_name (column1, column2, column3, ...)
+INSERT INTO table_name (column1, column2, column3, ...);
 VALUES (value1, value2, value3, ...);
 ```
 with ORM:
