@@ -16,13 +16,13 @@ Open [http://localhost:8080](http://localhost:8080) with your browser to see the
 
 ## What I using in this project?
 - Frontend: Reactjs + Redux.HTML/CSS-scss/Bootstrap4 (reactrap).
-- Backend: Node.js (Express) + MySQL [Sequelize](https://sequelize.org/).
+- Backend: Node.js (Express) + MySQL [(Sequelize)](https://sequelize.org/).
 - MVC architecture.
-- Using [bcyprt](https://www.npmjs.com/package/bcrypt) - library to help hash user passwords.
+- Using [bcyprt](https://www.npmjs.com/package/bcrypt) - a library to help hash user passwords.
 - ORM.
 
 ## MVC Architecture
-The Model-View-Controller [MVC](https://www.geeksforgeeks.org/mvc-framework-introduction/) architecture separates an application into three main components:
+The Model-View-Controller [(MVC)](https://www.geeksforgeeks.org/mvc-framework-introduction/) architecture separates an application into three main components:
 1. Model: Represents the data and business logic.
 2. View: Handles the presentation and user interface.
 3. Controller: Manages user input and communicates between the Model and View.
