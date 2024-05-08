@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import db from '../models/index.js';
 const saltRounds = 10;
 
+// Create new user
 let createNewUser = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -24,6 +25,7 @@ let createNewUser = async (data) => {
     });
 }
 
+// Hash user password
 let hashUserPassword = (password) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -36,7 +38,22 @@ let hashUserPassword = (password) => {
     });
 }
 
+// Get all users from database
+let getAllUsers = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let users = db.User.findAll({
+                raw: true, // get only data from db
+            });
+            resolve(users);
+        } catch (e) {
+            reject(e);
+        }
+    });
+}
+
 module.exports = {
     createNewUser: createNewUser,
     hashUserPassword: hashUserPassword,
+    getAllUsers: getAllUsers,
 }
