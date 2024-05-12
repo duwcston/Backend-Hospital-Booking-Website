@@ -19,7 +19,8 @@ Open [http://localhost:8080](http://localhost:8080) with your browser to see the
 - Backend: Node.js (Express) + MySQL [(Sequelize)](https://sequelize.org/).
 - MVC architecture.
 - Using [bcyprt](https://www.npmjs.com/package/bcrypt) - a library to help hash user passwords.
-- ORM.
+- ORM
+- Postman
 
 ## MVC Architecture
 The Model-View-Controller [(MVC)](https://www.geeksforgeeks.org/mvc-framework-introduction/) architecture separates an application into three main components:
