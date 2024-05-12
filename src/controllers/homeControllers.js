@@ -65,10 +65,15 @@ let putCRUD = async (req, res) => {
     });
 }
 
-let getDeleteCRUD = (req, res) => {
-    console.log(req.query.id);
-
-    return res.send("Delete CRUD from controller");
+let deleteCRUD = async (req, res) => {
+    let id = req.query.id;
+    if (id) {
+        await CRUDService.deleteUserData(id);
+        return res.send("Delete CRUD from controller");
+    }
+    else {
+        return res.send("User not found");
+    }
 }
 
 module.exports = {
@@ -79,5 +84,5 @@ module.exports = {
     displayGetCRUD: displayGetCRUD,
     getEditCRUD: getEditCRUD,
     putCRUD: putCRUD,
-    getDeleteCRUD: getDeleteCRUD,
+    deleteCRUD: deleteCRUD,
 }   
