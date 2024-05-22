@@ -1,6 +1,6 @@
 # Hospital-Booking-Website
 International University VNU - Web Application Development Project.  
-This is a [Node.js](https://nodejs.org/) project.
+This is the Backend for the [Hospital Booking System](https://github.com/duwcston/Frontend-Hospital-Booking-Website) project.
 
 ## Getting Started
 
