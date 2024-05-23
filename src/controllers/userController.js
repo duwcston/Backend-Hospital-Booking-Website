@@ -162,7 +162,19 @@ let handleGetAllUser = async (req,res) => {
     console.log("check message: ");
     return res.status(200).json(message);
   };
-
+  let getAllCode = async (req,res) => {
+    try{
+        let data = await userService.getAllCodeService(req.query.type);
+        console.log(data);
+        return res.status(200).json(data);
+    }catch(e){
+        console.log('get all code error: ', e)
+        return res.status(200).json({
+          errCode: -1,
+          errMessage: 'Error from server'
+        })
+    }
+  }
 
 module.exports = {
     handleEditUser,
@@ -172,4 +184,5 @@ module.exports = {
     signup,
     forgotpassword,
     resetpassword,
+    getAllCode
 }
