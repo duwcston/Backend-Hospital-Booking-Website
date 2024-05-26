@@ -112,7 +112,7 @@ let getAllUser = (userId) => {
 let signup = (request) => {
     return new Promise(async (resolve, reject) => {
         try{
-            const { email, password,firstName, lastName, address, phonenumber, gender, roleId } = request;
+            const { email, password,firstName, lastName, address, phonenumber, gender, roleId, positionId, avatar  } = request;
             const hashPassword = bcryptjs.hashSync(password, 10);
           
             const [newUser, created] = await User.findOrCreate({
@@ -126,6 +126,8 @@ let signup = (request) => {
                 phonenumber: phonenumber,
                 gender: gender === '1' ? true : false,
                 roleId: roleId,
+                positionId: positionId,
+                image: avatar
               },
             });
             if (created) {
@@ -177,7 +179,7 @@ let forgotpassword = (email) => {
 let handleEditUser = (data) => {
     return new Promise(async (resolve, reject) => {
         try{
-            if(!data.id){
+            if(!data.id||!data.roleId||!data.positionId||!data.gender){
                 resolve({
                     errCode: 2,
                     errMessage: 'Missing required paremeters'
@@ -192,7 +194,13 @@ let handleEditUser = (data) => {
                 user.firstName = data.firstName;
                 user.lastName = data.lastName;
                 user.address = data.address;
-                
+                user.roleId = data.roleId;
+                user.positionId = data.positionId;
+                user.gender = data.gender;
+                user.phonenumber = data.phonenumber;
+                if(data.avatar){
+                    user.image = data.avatar;
+                }
                 await user.save();
 
                 resolve({
