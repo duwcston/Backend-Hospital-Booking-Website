@@ -100,14 +100,7 @@ let updateUserData = (data) => {
 let deleteUserData = (userId) => {
     return new Promise(async (resolve, reject) => {
         try {
-            // let user = await db.User.findOne({
-            //     where: { id: userId }
-            // })
-            // if (user) {
-            //     await user.destroy({
-            //         where: { id: userId }
-            //     });
-            // }
+           
             await db.User.destroy({
                 where: { id: userId }
             });
