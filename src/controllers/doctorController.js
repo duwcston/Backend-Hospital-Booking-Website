@@ -77,10 +77,26 @@ let bulkCreateSchedule = async (req,res) => {
         })
     }
 }
+
+let getScheduleByDate = async (req,res) => {
+    try {
+        let infor = await doctorService.getScheduleByDate(req.query.doctorID, req.query.date);
+        return res.status(200).json(
+            infor
+        )
+    } catch (e) {
+        console.log(e);
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'Error from sever...'
+        })
+    }
+}
 module.exports = {
    getTopDoctorHome,
    getAllDoctors,
    postInforDoctors,
    getDetailDoctorById,
-   bulkCreateSchedule
+   bulkCreateSchedule,
+   getScheduleByDate
 }
