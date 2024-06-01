@@ -193,6 +193,7 @@ let bulkCreateSchedule = (data) => {
 let getScheduleByDate = (doctorId, date) => {
     return new Promise (async (resolve,reject) => {
         try{
+            console.log('check getschedule by data',doctorId,date );
             if (!doctorId || !date){
                 resolve({
                     errCode: 1,
