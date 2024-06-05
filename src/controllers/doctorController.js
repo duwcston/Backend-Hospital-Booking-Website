@@ -6,79 +6,79 @@ let getTopDoctorHome = async (req, res) => {
     let limit = req.query.limit;
 
     if (!limit) {
-        limit= 10
+        limit = 10
     }
-    try{
-    let response = await doctorService.getTopDoctorHome(+limit)
-    return res.status(200).json(response);
-    }catch(e){
+    try {
+        let response = await doctorService.getTopDoctorHome(+limit)
+        return res.status(200).json(response);
+    } catch (e) {
         console.log(e);
         return res.status(200).json({
-            errCode:-1,
-            message: 'Error from server...'
-          
+            errCode: -1,
+            message: 'Error from server'
+
         })
     }
 }
-let getAllDoctors = async (req,res) =>{
-   
-    try{
-    let doctors = await doctorService.getAllDoctors ()
-    return res.status(200).json(doctors);
-    }catch(e){
+let getAllDoctors = async (req, res) => {
+
+    try {
+        let doctors = await doctorService.getAllDoctors()
+        return res.status(200).json(doctors);
+    } catch (e) {
         console.log(e);
         return res.status(200).json({
-            errCode:-1,
-            message: 'Error from server...'
-          
+            errCode: -1,
+            message: 'Error from server'
+
         })
     }
 }
-let postInforDoctors = async (req,res) =>{
-   
-    try{
-    let response = await doctorService.saveDetailInforDoctor (req.body)
-    return res.status(200).json(response);
-    }catch(e){
+let postInforDoctors = async (req, res) => {
+
+    try {
+        let response = await doctorService.saveDetailInforDoctor(req.body)
+        return res.status(200).json(response);
+    } catch (e) {
         console.log(e);
         return res.status(200).json({
-            errCode:-1,
-            message: 'Error from server...'
-          
+            errCode: -1,
+            message: 'Error from server'
+
         })
     }
 }
-let getDetailDoctorById = async (req,res) =>{
-   
-    try{
-    let infor = await doctorService.getDetailDoctorById(req.query.id);
-    return res.status(200).json(infor);
-    }catch(e){
+let getDetailDoctorById = async (req, res) => {
+
+    try {
+        let infor = await doctorService.getDetailDoctorById(req.query.id);
+        return res.status(200).json(infor);
+    } catch (e) {
         console.log(e);
         return res.status(200).json({
-            errCode:-1,
-            message: 'Error from server...'
-          
+            errCode: -1,
+            message: 'Error from server'
+
         })
     }
 }
 
-let bulkCreateSchedule = async (req,res) => {
-    try{
+let bulkCreateSchedule = async (req, res) => {
+    try {
         let infor = await doctorService.bulkCreateSchedule(req.body);
         return res.status(200).json(
             infor
         )
-    } catch (e){
+    } catch (e) {
         console.log(e);
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from sever...'
+            errMessage: 'Error from server'
         })
     }
 }
 
-let getScheduleByDate = async (req,res) => {
+let getScheduleByDate = async (req, res) => {
     try {
         console.log('check data', req.query.date);
         let infor = await doctorService.getScheduleByDate(req.query.doctorId, req.query.date);
@@ -89,15 +89,33 @@ let getScheduleByDate = async (req,res) => {
         console.log(e);
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'Error from sever...'
+            errMessage: 'Error from server'
         })
     }
 }
+
+let getExtraInforById = async (req, res) => {
+    try {
+        console.log('check data', req.query);
+        let infor = await doctorService.getExtraInforById(req.query.doctorId);
+        return res.status(200).json(
+            infor
+        )
+    } catch (e) {
+        console.log(e);
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'Error from server'
+        })
+    }
+}
+
 module.exports = {
-   getTopDoctorHome,
-   getAllDoctors,
-   postInforDoctors,
-   getDetailDoctorById,
-   bulkCreateSchedule,
-   getScheduleByDate
+    getTopDoctorHome,
+    getAllDoctors,
+    postInforDoctors,
+    getDetailDoctorById,
+    bulkCreateSchedule,
+    getScheduleByDate,
+    getExtraInforById
 }

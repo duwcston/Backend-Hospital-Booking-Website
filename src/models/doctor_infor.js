@@ -1,23 +1,23 @@
 'use strict';
-const{
+const {
     Model
-} = require ('sequelize');
-module.exports = (sequelize, DataTypes)=> {
+} = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
     class Doctor_Infor extends Model {
-        static associate (models){
+        static associate(models) {
             //define association here
-            Doctor_Infor.belongsTo(models.User,{ foreignKey:'doctorId'});
+            Doctor_Infor.belongsTo(models.User, { foreignKey: 'doctorId' });
 
-            Doctor_Infor.belongsTo(models.Allcode,{ foreignKey:'priceId', targetKey:'keyMap', as:'priceTypeData'});
-            Doctor_Infor.belongsTo(models.Allcode,{ foreignKey:'provinceId', targetKey:'keyMap', as:'provinceTypeData'});
-            Doctor_Infor.belongsTo(models.Allcode,{ foreignKey:'paymentId', targetKey:'keyMap', as:'paymentTypeData'});
+            Doctor_Infor.belongsTo(models.Allcode, { foreignKey: 'priceId', targetKey: 'keyMap', as: 'priceTypeData' });
+            Doctor_Infor.belongsTo(models.Allcode, { foreignKey: 'provinceId', targetKey: 'keyMap', as: 'provinceTypeData' });
+            Doctor_Infor.belongsTo(models.Allcode, { foreignKey: 'paymentId', targetKey: 'keyMap', as: 'paymentTypeData' });
         }
     };
 
-    Doctor_Infor.init ({
+    Doctor_Infor.init({
         doctorId: DataTypes.INTEGER,
         priceId: DataTypes.STRING,
-        provincedID: DataTypes.STRING,
+        provinceId: DataTypes.STRING,
         paymentId: DataTypes.STRING,
         addressClinic: DataTypes.STRING,
         nameClinic: DataTypes.STRING,
