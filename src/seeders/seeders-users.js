@@ -10,7 +10,7 @@ module.exports = {
         gender: 1,
         phonenumber: '0123456789',
         image: null,
-        roleId: 'R1',
+        roleId: '1',
         positionId: 'Professor',
 
         createdAt: new Date(),
