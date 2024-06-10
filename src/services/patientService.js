@@ -1,7 +1,7 @@
 import db from "../models/index";
 require('dotenv').config();
 
-let postBookAppointment = async (data) => {
+let postBookAppointment = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
             if (!data.email || !data.doctorId || !data.date || !data.timeType) {
@@ -11,11 +11,12 @@ let postBookAppointment = async (data) => {
                 });
             }
             else {
+                // Check User exist in DB
                 let user = await db.User.findOrCreate({
                     where: { email: data.email },
                     defaults: {
                         email: data.email,
-                        roleId: "R3"
+                        roleId: 'R3'
                     }
                 });
 
@@ -24,7 +25,7 @@ let postBookAppointment = async (data) => {
                     await db.Booking.findOrCreate({
                         where: { patientId: user[0].id },
                         defaults: {
-                            statusId: '',
+                            statusId: 'S1',
                             doctorId: data.doctorId,
                             patientId: user[0].id,
                             date: data.date,
@@ -37,9 +38,10 @@ let postBookAppointment = async (data) => {
                     errCode: 0,
                     message: "Save infor patient booking successfully"
                 });
+
             }
-        } catch (error) {
-            reject(error);
+        } catch (e) {
+            reject(e);
         }
     });
 }
