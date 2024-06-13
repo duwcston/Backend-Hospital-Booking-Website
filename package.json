@@ -27,6 +27,7 @@
     "moment": "^2.30.1",
     "mysql2": "^3.9.7",
     "nodemailer": "^6.9.13",
+    "react-toastify": "^10.0.5",
     "sequelize": "^6.6.2",
     "tedious": "^18.1.0",
     "uuid": "^10.0.0"

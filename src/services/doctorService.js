@@ -259,7 +259,7 @@ let getScheduleByDate = (doctorId, date) => {
 
                     include: [
                         { model: db.Allcode, as: 'timeTypeData', attributes: ['valueEn', 'valueVi'] },
-                        { model: db.User, as: 'doctorData', attributes: ['firstName', 'lastName']}
+                        { model: db.User, as: 'doctorData', attributes: ['firstName', 'lastName'] }
                     ],
                     raw: false,
                     nest: true
@@ -343,7 +343,7 @@ let getProfileDoctorById = (inputId) => {
                 })
 
                 if (data && data.image) {
-                    data.image = new Buffer(data.image, 'base64').toString('binary');
+                    data.image = Buffer.from(data.image, 'base64').toString('binary');
                 }
                 if (!data) data = {};
                 resolve({

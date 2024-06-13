@@ -11,7 +11,7 @@ let createSpecialty = async (data) => {
             } else {
                 await db.Specialty.create({
                     name: data.name,
-                    imageBase64: data.imageBase64,
+                    image: data.imageBase64,
                     descriptionHTML: data.descriptionHTML,
                     descriptionMarkdown: data.descriptionMarkdown
                 })
@@ -39,7 +39,7 @@ let getAllSpecialty = async () => {
             }
             if (data && data.length > 0) {
                 data.map(item => {
-                    // item.imageBase64 = new Buffer(item.image, 'base64').toString('binary');
+                    item.dataValues.image = Buffer.from(item.dataValues.image, 'base64').toString('binary');
                     return item;
                 })
                 console.log(data);
