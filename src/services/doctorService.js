@@ -52,23 +52,34 @@ let getAllDoctors = (limitInput) => {
         }
     })
 }
+let checkRequiredFields = (inputData) => {
+    let arrFields = ['doctorId', 'contentHTML', 'contentMarkdown', 'action',
+        'selectedPrice', 'selectedPayment', 'selectedProvince', 'nameClinic',
+        'addressClinic', 'note', 'specialtyId'];
+    let isValid = true;
+    let element = '';
+    for (let i = 0; i < arrFields.length; i++) {
+        if (!inputData[arrFields[i]]) {
+            isValid = false;
+            element = arrFields[i];
+            break;
+        }
+    }
+    return {
+        isValid: isValid,
+        element: element
+    }
+}
+
 let saveDetailInforDoctor = (inputData) => {
     return new Promise(async (resolve, reject) => {
         try {
+            let checkObj = checkRequiredFields(inputData);
             console.log(inputData)
-            if (!inputData.doctorId
-                || !inputData.contentHTML
-                || !inputData.contentMarkdown
-                || !inputData.action
-                || !inputData.selectedPrice
-                || !inputData.selectedPayment
-                || !inputData.selectProvince
-                || !inputData.nameClinic
-                || !inputData.addressClinic
-                || !inputData.note) {
+            if (checkObj.isValid === false) {
                 resolve({
                     errCode: 1,
-                    errMessage: 'Missing parameter'
+                    errMessage: 'Missing parameter: ${checkObj.element}'
                 })
             } else {
                 if (inputData.action === 'CREATE') {
@@ -103,22 +114,27 @@ let saveDetailInforDoctor = (inputData) => {
                     //update
                     doctorInfor.doctorId = inputData.doctorId;
                     doctorInfor.priceId = inputData.selectedPrice;
-                    doctorInfor.provinceId = inputData.selectProvince;
+                    doctorInfor.provinceId = inputData.selectedProvince;
                     doctorInfor.paymentId = inputData.selectedPayment;
                     doctorInfor.nameClinic = inputData.nameClinic;
                     doctorInfor.addressClinic = inputData.addressClinic;
                     doctorInfor.note = inputData.note;
+                    doctorInfor.specialtyId = inputData.specialtyId;
+                    doctorInfor.clinicId = inputData.clinicId;
+                    
                     await doctorInfor.save()
                 } else {
                     //create
                     await db.Doctor_Infor.create({
                         doctorId: inputData.doctorId,
                         priceId: inputData.selectedPrice,
-                        provinceId: inputData.selectProvince,
+                        provinceId: inputData.selectedProvince,
                         paymentId: inputData.selectedPayment,
                         nameClinic: inputData.nameClinic,
                         addressClinic: inputData.addressClinic,
                         note: inputData.note,
+                        specialtyId: inputData.specialtyId,
+                        clinicId: inputData.clinicId
                     })
                 }
             }
@@ -170,7 +186,7 @@ let getDetailDoctorById = (inputId) => {
                     nest: true
                 })
                 if (data && data.image) {
-                    data.image = new Buffer(data.image, 'base64').toString('binary');
+                    data.image = Buffer.from(data.image, 'base64').toString('binary');
                 }
                 if (!data) data = {};
                 resolve({

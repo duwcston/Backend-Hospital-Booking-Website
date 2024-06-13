@@ -14,7 +14,7 @@ let createSpecialty = async (req, res) => {
             message: 'Error from the server'
         });
     }
-}   
+}
 
 let getAllSpecialty = async (req, res) => {
     try {
