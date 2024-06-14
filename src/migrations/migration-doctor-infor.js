@@ -1,13 +1,13 @@
 'use strict';
 
 module.exports = {
-    up: async(queryInterface, Sequelize) => {
+    up: async (queryInterface, Sequelize) => {
         await queryInterface.createTable('doctor_infor', {
-            id:{
+            id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
-                type:Sequelize.INTEGER
+                type: Sequelize.INTEGER
             },
 
             doctorId: {
@@ -18,23 +18,23 @@ module.exports = {
                 type: Sequelize.INTEGER,
                 allowNull: false,
             },
-            clinicId:{
+            clinicId: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
             },
-            priceId:{
+            priceId: {
                 type: Sequelize.STRING,
                 allowNull: false,
             },
-            provinceId:{
+            provinceId: {
                 type: Sequelize.STRING,
                 allowNull: false,
             },
-            paymentId:{
+            paymentId: {
                 type: Sequelize.STRING,
                 allowNull: false,
             },
-            addressClinic:{
+            addressClinic: {
                 type: Sequelize.STRING,
                 allowNull: false,
             },
@@ -42,25 +42,25 @@ module.exports = {
                 type: Sequelize.STRING,
                 allowNull: false,
             },
-            note:{
-                type:Sequelize.STRING
+            note: {
+                type: Sequelize.STRING
             },
-            count:{
+            count: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
                 defaultValue: 0
             },
-            createdAt:{
+            createdAt: {
                 allowNull: false,
                 type: Sequelize.STRING
             },
-            updatedAt:{
+            updatedAt: {
                 allowNull: false,
                 type: Sequelize.DATE
             }
         });
     },
-    down: async (queryInterface, Sequelize) =>{
+    down: async (queryInterface, Sequelize) => {
         await queryInterface.dropTable('doctor_infor');
     }
 };
