@@ -34,7 +34,7 @@ let getAllSpecialty = async (req, res) => {
 
 let getDetailSpecialtyById = async (req, res) => {
     try {
-        let infor = await specialtyService.getDetailSpecialtyById(req.query.id);
+        let infor = await specialtyService.getDetailSpecialtyById(req.query.id,req.query.location);
         return res.status(200).json(
             infor
         );

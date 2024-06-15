@@ -66,7 +66,7 @@ let getDetailSpecialtyById = async (inputId, location) => {
                 })
             } else {
                 let data = {};
-                if (location === 'ALL') {
+                // if (location === 'ALL') {
                     data = await db.Specialty.findOne({
                         where: { id: inputId },
                         attributes: ['descriptionHTML', 'descriptionMarkdown'],
@@ -86,7 +86,8 @@ let getDetailSpecialtyById = async (inputId, location) => {
                                 attributes: ['doctorId', 'provinceId'],
                             })
                         }
-                        data.doctorSpecialty = doctorSpecialty;
+                
+                        data.dataValues.doctorSpecialty = doctorSpecialty;
                     }
                     else {
                         data = {};
@@ -96,10 +97,10 @@ let getDetailSpecialtyById = async (inputId, location) => {
                         errMessage: 'OK',
                         data
                     });
-                }
-                else {
+                // }
+                // else {
 
-                }
+                // }
             }
         }
         catch (e) {
