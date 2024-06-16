@@ -75,7 +75,6 @@ let saveDetailInforDoctor = (inputData) => {
     return new Promise(async (resolve, reject) => {
         try {
             let checkObj = checkRequiredFields(inputData);
-            console.log(inputData)
             if (checkObj.isValid === false) {
                 resolve({
                     errCode: 1,
@@ -260,7 +259,6 @@ let bulkCreateSchedule = (data) => {
 let getScheduleByDate = (doctorId, date) => {
     return new Promise(async (resolve, reject) => {
         try {
-            console.log('check getschedule by data', doctorId, date);
             if (!doctorId || !date) {
                 resolve({
                     errCode: 1,

@@ -159,13 +159,11 @@ let handleGetAllUser = async (req,res) => {
     }
     const id  = req.body.id;
     let message = await userService.handleDeleteUser(id);
-    console.log("check message: ");
     return res.status(200).json(message);
   };
   let getAllCode = async (req,res) => {
     try{
         let data = await userService.getAllCodeService(req.query.type);
-        console.log(data);
         return res.status(200).json(data);
     }catch(e){
         console.log('get all code error: ', e)
