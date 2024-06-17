@@ -2,6 +2,8 @@ import { where } from "sequelize"
 import db from "../models/index"
 require('dotenv').config();
 import _, { at, includes, reject } from 'lodash';
+import { raw } from "body-parser";
+import emailService from "./emailService";
 // import { raw } from "body-parser";
 
 const MAX_NUMBER_SCHEDULE = process.env.MAX_NUMBER_SCHEDULE;
@@ -120,7 +122,7 @@ let saveDetailInforDoctor = (inputData) => {
                     doctorInfor.note = inputData.note;
                     doctorInfor.specialtyId = inputData.specialtyId;
                     doctorInfor.clinicId = inputData.clinicId;
-                    
+
                     await doctorInfor.save()
                 } else {
                     //create
@@ -266,11 +268,7 @@ let getScheduleByDate = (doctorId, date) => {
                 })
             } else {
                 let dataSchedule = await db.Schedule.findAll({
-                    where: {
-                        doctorId: doctorId,
-                        date: date
-                    },
-
+                    where: { doctorId: doctorId, date: date },
                     include: [
                         { model: db.Allcode, as: 'timeTypeData', attributes: ['valueEn', 'valueVi'] },
                         { model: db.User, as: 'doctorData', attributes: ['firstName', 'lastName'] }
@@ -372,6 +370,82 @@ let getProfileDoctorById = (inputId) => {
     })
 }
 
+let getListPatientForDoctor = (doctorId, date) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!doctorId || !date) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing required parameters'
+                })
+            } else {
+                let data = await db.Booking.findAll({
+                    where: { doctorId: doctorId, date: date, statusId: 'S2' },
+                    include: [
+                        {
+                            model: db.User, as: 'patientData',
+                            attributes: ['email', 'firstName', 'address', 'gender'],
+                            includes: [
+                                {
+                                    model: db.Allcode, as: 'genderData', attributes: ['valueEn', 'valueVi']
+                                }
+                            ]
+                        },
+                        { model: db.Allcode, as: 'timeTypeDataPatient', attributes: ['valueEn', 'valueVi'] }
+                    ],
+                    raw: false,
+                    nest: true
+                })
+
+                if (!data) data = [];
+                resolve({
+                    errCode: 0,
+                    data: data
+                })
+            }
+
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
+let sendRemedy = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!data.email || !data.doctorId || !data.patientId || !data.timeType || !data.imgBase64) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing required parameters'
+                })
+            } else {
+                let appointment = await db.Booking.findOne({
+                    where: {
+                        doctorId: data.doctorId,
+                        patientId: data.patientId,
+                        timeType: data.timeType,
+                        statusId: 'S2'
+                    },
+                    raw: false
+                })
+
+                if (appointment) {
+                    appointment.statusId = 'S3';
+                    await appointment.save();
+                }
+
+                // Send Remedy Email to patient
+                await emailService.sendAttchment(data)
+                resolve({
+                    errCode: 0,
+                    errMessage: 'OK'
+                })
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
 
 module.exports = {
     getTopDoctorHome,
@@ -381,5 +455,7 @@ module.exports = {
     bulkCreateSchedule,
     getScheduleByDate,
     getExtraInforById,
-    getProfileDoctorById
+    getProfileDoctorById,
+    getListPatientForDoctor,
+    sendRemedy
 }

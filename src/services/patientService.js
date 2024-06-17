@@ -1,3 +1,4 @@
+import { first } from "lodash";
 import db from "../models/index";
 require('dotenv').config();
 import emailService from "./emailService";
@@ -11,7 +12,7 @@ let buildUrlEmail = (doctorId, token) => {
 let postBookAppointment = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if (!data.email || !data.doctorId || !data.date || !data.timeType || !data.fullname) {
+            if (!data.email || !data.doctorId || !data.date || !data.timeType || !data.fullname || !data.selectedGender || !data.address) {
                 resolve({
                     errCode: -1,
                     message: "Missing required parameters"
@@ -35,7 +36,10 @@ let postBookAppointment = (data) => {
                     where: { email: data.email },
                     defaults: {
                         email: data.email,
-                        roleId: 'R3'
+                        roleId: 'R3',
+                        gender: data.selectedGender,
+                        address: data.address,
+                        firstName: data.fullname, 
                     }
                 });
 

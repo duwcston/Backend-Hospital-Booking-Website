@@ -37,8 +37,8 @@ let getSubject = (dataSend) => {
 let getBodyHTMLEmail = (dataSend) => {
     let result = '';
     if (dataSend.language === 'vi') {
-        result = 
-        `
+        result =
+            `
         <h2>Xin chào ${dataSend.patientName}!</h2>
         <p>Đây là email xác nhận đặt lịch khám tại phòng khám của chúng tôi</p>
         <p>Thông tin đặt lịch của bạn:</p>
@@ -55,7 +55,7 @@ let getBodyHTMLEmail = (dataSend) => {
     }
     if (dataSend.language === 'en') {
         result =
-        `
+            `
         <h2>Dear ${dataSend.patientName}!</h2>
         <p>This is an email to confirm your booking at our clinic</p>
         <p>Your booking information:</p>
@@ -74,7 +74,76 @@ let getBodyHTMLEmail = (dataSend) => {
     return result;
 }
 
+let getBodyHTMLEmailRemedy = (dataSend) => {
+    let result = '';
+    if (dataSend.language === 'vi') {
+        result =
+            `
+        <h3>Xin chào ${dataSend.patientName}!</h3>
+        <p>Đây là email gửi tới bạn về đơn thuốc của bác sĩ</p>
+        <p>Thông tin đơn thuốc của bạn được gửi trong file đính kèm.</p>
+
+        <div>Cảm ơn bạn đã chọn dịch vụ của chúng tôi!</div>
+        `
+    }
+    if (dataSend.language === 'en') {
+        result =
+            `
+        <h3>Dear ${dataSend.patientName}!</h3>
+        <p>This is an email to send you the prescription of the doctor</p>
+        <p>Your prescription information is sent in the attached file.</p>
+
+        <div>Thank you for choosing our service!</div>
+        `
+    }
+}
+
+let sendAttchment = async (dataSend) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let transporter = nodemailer.createTransport({
+                host: "smtp.gmail.com",
+                port: 587,
+                secure: false, // true for 465, false for other ports
+                auth: {
+                    user: process.env.EMAIL_APP,
+                    pass: process.env.EMAIL_APP_PASSWORD
+                },
+            });
+
+            let info = await transporter.sendMail({
+                from: '"Toan Nguyen 👻" <no.reply@gmail.com>',
+                to: dataSend.receiverEmail,
+                subject: getSubjectRemedy(dataSend),
+                html: getBodyHTMLEmailRemedy(dataSend),
+                attachments: [
+                    {
+                        filename: `remedy-${dataSend.patientId}-$(new Date().getTime()).png`,
+                        content: dataSend.imageBase64.split("base64,")[1],
+                        encoding: 'base64'
+                    }
+                ]
+            });
+            resolve(true);
+        } catch (e) {
+            reject(e);
+        }
+    });
+}
+
+
+let getSubjectRemedy = (dataSend) => {
+    let result = '';
+    if (dataSend.language === 'vi') {
+        result = 'Đơn thuốc ✔';
+    }
+    if (dataSend.language === 'en') {
+        result = 'Prescription ✔';
+    }
+    return result;
+}
 
 module.exports = {
     sendSimpleEmail: sendSimpleEmail,
+    sendAttchment: sendAttchment
 }
