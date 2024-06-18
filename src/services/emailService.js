@@ -96,6 +96,7 @@ let getBodyHTMLEmailRemedy = (dataSend) => {
         <div>Thank you for choosing our service!</div>
         `
     }
+    return result;
 }
 
 let sendAttchment = async (dataSend) => {
