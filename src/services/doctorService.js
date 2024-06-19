@@ -1,10 +1,8 @@
-import { where } from "sequelize"
 import db from "../models/index"
 require('dotenv').config();
-import _, { at, includes, reject } from 'lodash';
-import { raw } from "body-parser";
+import _ from 'lodash';
 import emailService from "./emailService";
-// import { raw } from "body-parser";
+
 
 const MAX_NUMBER_SCHEDULE = process.env.MAX_NUMBER_SCHEDULE;
 
@@ -421,6 +419,7 @@ let sendRemedy = (data) => {
                     errMessage: 'Missing required parameters'
                 })
             } else {
+                // Update Patient status
                 let appointment = await db.Booking.findOne({
                     where: {
                         doctorId: data.doctorId,
@@ -437,7 +436,7 @@ let sendRemedy = (data) => {
                 }
 
                 // Send Remedy Email to patient
-                await emailService.sendAttchment(data)
+                await emailService.sendAttachment(data)
                 resolve({
                     errCode: 0,
                     errMessage: 'OK'

@@ -99,7 +99,7 @@ let getBodyHTMLEmailRemedy = (dataSend) => {
     return result;
 }
 
-let sendAttchment = async (dataSend) => {
+let sendAttachment = async (dataSend) => {
     return new Promise(async (resolve, reject) => {
         try {
             let transporter = nodemailer.createTransport({
@@ -114,13 +114,14 @@ let sendAttchment = async (dataSend) => {
 
             let info = await transporter.sendMail({
                 from: '"Toan Nguyen 👻" <no.reply@gmail.com>',
-                to: dataSend.receiverEmail,
+                to: dataSend.email,
                 subject: getSubjectRemedy(dataSend),
                 html: getBodyHTMLEmailRemedy(dataSend),
                 attachments: [
                     {
-                        filename: `remedy-${dataSend.patientId}-$(new Date().getTime()).png`,
-                        content: dataSend.imageBase64.split("base64,")[1],
+                        filename: `remedy-${dataSend.patientId}-${new Date().getTime()}.png`,
+                        // content: dataSend.imageBase64.split("base64,")[1],
+                        content: dataSend.imageBase64,
                         encoding: 'base64'
                     }
                 ]
@@ -146,5 +147,5 @@ let getSubjectRemedy = (dataSend) => {
 
 module.exports = {
     sendSimpleEmail: sendSimpleEmail,
-    sendAttchment: sendAttchment
+    sendAttachment: sendAttachment
 }
